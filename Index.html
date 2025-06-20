@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test na Prawo Jazdy kat. B</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 800px; margin: auto; }
+    h1 { color: #2a5; }
+    .question { margin-bottom: 20px; }
+    .result { font-weight: bold; margin-top: 20px; }
+    button { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Test na Prawo Jazdy kat. B</h1>
+  <form id="quizForm">
+    <!-- Pytania zostaną dodane przez JS -->
+  </form>
+  <button onclick="submitQuiz()">Sprawdź odpowiedzi</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const questions = [
+      { q: "1. Kiedy wolno wyprzedzać na przejściu dla pieszych?", a: ["Zawsze, jeśli pieszy jeszcze nie wszedł na przejście", "Nigdy", "Gdy ruch odbywa się powoli i jest wyznaczone przejście ze światłami"], correct: 2 },
+      { q: "2. Który dokument uprawnia do kierowania pojazdem?", a: ["Dowód rejestracyjny", "Ubezpieczenie OC", "Prawo jazdy"], correct: 2 },
+      { q: "3. Co oznacza znak B-20 (STOP)?", a: ["Obowiązek zatrzymania pojazdu i ustąpienia pierwszeństwa", "Nakaz zwolnienia", "Zakaz wjazdu"], correct: 0 },
+      { q: "4. Co zrobić przy czerwonym świetle na przejeździe kolejowym?", a: ["Zatrzymać się przed przejazdem", "Zwiększyć prędkość", "Zatrzymać się tylko, gdy nadjeżdża pociąg"], correct: 0 },
+      { q: "5. Dopuszczalny limit alkoholu we krwi kierowcy w Polsce?", a: ["0,2‰", "0,5‰", "0,0‰"], correct: 0 },
+      { q: "6. Kiedy masz pierwszeństwo?", a: ["Wjeżdżasz z drogi podporządkowanej", "Jedziesz drogą z pierwszeństwem", "Skręcasz w lewo"], correct: 1 },
+      { q: "7. Maksymalna prędkość na autostradzie w Polsce?", a: ["130 km/h", "120 km/h", "140 km/h"], correct: 0 },
+      { q: "8. Czy możesz rozmawiać przez telefon?", a: ["Tak, na krótkich trasach", "Tak, jeśli masz zestaw głośnomówiący", "Nie, nigdy"], correct: 1 },
+      { q: "9. Jakie światła w ciągu dnia?", a: ["Drogowe", "Awaryjne", "Do jazdy dziennej lub mijania"], correct: 2 },
+      { q: "10. Znak z dziećmi w trójkącie?", a: ["Zakaz ruchu pieszych", "Obszar szkoły", "Przejście dla pieszych"], correct: 1 },
+      { q: "11. Co po kolizji bez ofiar?", a: ["Wezwać policję", "Opuścić miejsce", "Zabezpieczyć i ustalić sprawcę"], correct: 2 },
+      { q: "12. Minimalne ciśnienie w oponach?", a: ["0,8 bara", "1,0 bar", "Zgodne z zaleceniami producenta"], correct: 2 },
+      { q: "13. Co robisz, gdy nadjeżdża karetka?", a: ["Zatrzymać się na środku", "Ustąpić przejazdu", "Kontynuować jazdę"], correct: 1 },
+      { q: "14. Czy wolno cofać na autostradzie?", a: ["Tak, na pasie awaryjnym", "Tak, ale krótko", "Nie"], correct: 2 },
+      { q: "15. Czy trzeba zapinać pasy?", a: ["Tylko poza miastem", "Tylko powyżej 50 km/h", "Tak, zawsze"], correct: 2 }
+    ];
+
+    const form = document.getElementById("quizForm");
+
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<p><strong>${q.q}</strong></p>` + q.a.map((ans, i) =>
+        `<label><input type="radio" name="q${index}" value="${i}"> ${ans}</label><br>`
+      ).join("");
+      form.appendChild(div);
+    });
+
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (answer && parseInt(answer.value) === q.correct) {
+          score++;
+        }
+      });
+      document.getElementById("result").innerHTML =
+        `Twój wynik: <strong>${score} / ${questions.length}</strong><br>` +
+        (score >= 12 ? "✅ Gratulacje, zdałeś!" : "❌ Nie zdałeś. Spróbuj ponownie.");
+    }
+  </script>
+</body>
+</html>
